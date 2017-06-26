@@ -91,10 +91,13 @@ class CrawlCommand extends Command
      */
     function insertBlogData(String $blogTitle, String $blogUrl, String $blogUpdateDate)
     {
+        $now = date('Y/m/d H:i:s');
         DB::table('blogs')->insert([
             'blog_title' => $blogTitle,
             'blog_url' => $blogUrl,
-            'blog_update_date' => $blogUpdateDate
+            'blog_update_date' => $blogUpdateDate,
+            'created_at' => $now,
+            'updated_at' => $now
         ]);
     }
      /**
@@ -115,12 +118,15 @@ class CrawlCommand extends Command
      */
     private function updateBlogData(String $index, String $blogUpdateDate)
     {
-        DB::table('blogs')->where('id', $index)->update(['blog_update_date' => $blogUpdateDate]);
+        $now = date('Y/m/d H:i:s');
+        DB::table('blogs')
+        ->where('id', $index)
+        ->update(['blog_update_date' => $blogUpdateDate, 'updated_at' => $now]);
     }
 
      /**
      * If $blogData is not null, insert blog data to Blogs table.
-     * If $blogData is array, update Blogs table and send message to Slack.
+     * If $blogData is array and blog_update_date do not equal db ,update Blogs table and send message to Slack.
      * @param array or null  blogData
      * @param array $blog
      * @param String $index(id of Blogs table)
