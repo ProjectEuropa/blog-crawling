@@ -13,7 +13,7 @@ return [
   |
   */
 
-  'endpoint' => env('SLACKE_END_POINT'),
+  'endpoint' => getenv('SLACKE_END_POINT'),
 
   /*
   |-------------------------------------------------------------

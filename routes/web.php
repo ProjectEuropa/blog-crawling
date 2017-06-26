@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,8 @@ use Illuminate\Support\Collection;
 use App\Notifications\InvoicePaid;
 use Maknz\Slack\Facades\Slack;
 use Illuminate\Support\Facades\Config;
-
+*/
+/*
 function insertBlogData(String $blogTitle, String $blogUrl, String $blogUpdateDate)
 {
     DB::table('blogs')->insert([
@@ -47,13 +49,13 @@ function insertOrUpdateBlogData($blogData, $blog, String $index, String $blogUpd
             updateBlogData($index, $blogUpdateDate);
         }
     }
-}
+}*/
 
 Route::get('/', function () {
-    //return view('welcome');
-    $client = new Client();
+    return view('welcome');
+    //$client = new Client();
 
-    $blogs = collect(config('const.blogs'));
+    //$blogs = collect(config('const.blogs'));
 
     // $array = array(
     //     '0' => array('blogTitle'=>'いつも隣にITのお仕事', 'blogUrl'=>'https://tonari-it.com/'),
@@ -69,7 +71,7 @@ Route::get('/', function () {
     //     'blogUrl' => 'https://ameblo.jp/hiromin-yuki/',
     // );
 
-    
+    /*
     foreach ($blogs as $index => $blog) {
         $guzzle = new GuzzleClient(array(
             'curl.options' => array(
@@ -118,5 +120,5 @@ Route::get('/', function () {
                 # code...
                 break;
         }
-    }
+    }*/
 });
