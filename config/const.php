@@ -13,6 +13,11 @@ return [
             '3' => array(
                 'blogTitle' => '美人になれるたくさんの魔法',
                 'blogUrl' => 'https://ameblo.jp/hiromin-yuki/'),
+            '4' => array (
+                'blogTitle' => '農林水産省ホームページ',
+                'blogUrl' => 'http://www.maff.go.jp/')
         ),
+
+    'heiseiYyyy' => 1988,
     
 ];

@@ -77,6 +77,15 @@ class CrawlCommand extends Command
                     $blogData = $this->getBlogData($index);
                     $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateBecomeBeauty->format('Y-m-d'));
                     break;
+                case '農林水産省ホームページ':
+                    $japaneseDate = $crawler->filter('.list_item_date')->first()->text();
+                    $adYyyy = (string)(config('const.heiseiYyyy')+ str_replace('平成', '', $japaneseDate));
+                    $date = $adYyyy.preg_replace('/^平成[0-9][0-9]/', '', $japaneseDate);
+                    $format = 'Y年m月d日';
+                    $dateMinistryAFF = DateTime::createFromFormat($format, $date);
+                    $blogData = $this->getBlogData($index);
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinistryAFF->format('Y-m-d'));
+                    break;
                 default:
                     break;
             }
@@ -148,6 +157,7 @@ class CrawlCommand extends Command
      /**
      * Send message to Slack.
      * @param String $blogTitle
+     * @param String $blogUrl
      * @return void
      */
     private function sendToSlack(String $blogTitle, String $blogUrl)
