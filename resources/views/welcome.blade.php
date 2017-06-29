@@ -1,95 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Crawler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css"/>
+    <style>
+        .message {
+            width: 300px;
+            margin: auto;
+        }
 
-        <title>Laravel</title>
+        .message-body {
+            width: 300px;
+            margin: auto;
+        }
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+        .message.is-primary .message-header {
+            width: 300px;
+            margin: auto;
+        }
+    </style>
+    <script type="text/javascript">
+        window.Laravel = window.Laravel || {};
+        window.Laravel.csrfToken = "{{csrf_token()}}";
+    </script>
+</head>
+<body>
+<div id="app">
+    <header>
+        <nav class="nav">
+            <div class="nav-left">
+                 <div class="block">
+                    <span class="tag is-primary">
+                        Blog Crawler
+                    </span>
                 </div>
             </div>
+
+            <div class="nav-right nav-menu block">
+                <span class="nav-item">
+                    <input class="input" type="search" name="search" placeholder="キーワード検索" v-model="keyWord">
+                    <a class="nav-item button is-primary" @click="search">Search</a>
+
+                        <span class="select nav-item">
+                            <select @change='sort()' v-model="orderType">
+                                <option value="new" selected>Sort by new Date</option>
+                                <option value="old">Sort by old Date</option>
+                            </select>
+                        </span>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <div>
+        <article class="message is-primary" v-for="blog in blogs">
+            <div class="message-header" >
+                <a :href="blog.blog_url" target="_blank"><p>@{{ blog.blog_title }}</p></a>
+            </div>
+            <div class="message-body" >
+                最終更新日時：@{{ blog.updated_at }}
+            </div>
+        </article>
         </div>
-    </body>
+    </div>
+</div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@2.3.4"></script>
+
+    <script src="js/app.js"></script>
+
+</body>
 </html>
