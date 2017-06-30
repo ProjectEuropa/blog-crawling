@@ -139,5 +139,5 @@ Route::get('/', function () {
 
 
 Route::get('/getblogsdata', function () {
-    return json_encode(DB::table('blogs')->get());
+    return json_encode(DB::table('blogs')->orderBy('updated_at', 'desc')->get());
 });
