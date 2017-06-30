@@ -12,14 +12,14 @@ new Vue({
         sort: function() {
             if (this.orderType === 'new') {
                 this.blogs.sort(function(a, b){
-                    if(a.updated_at < b.updated_at) return -1;
-                    if(a.updated_at > b.updated_at) return 1;
+                    if(a.updated_at > b.updated_at) return -1;
+                    if(a.updated_at < b.updated_at) return 1;
                     return 0;
                 });
             } else {
                 this.blogs.sort(function(a, b){
-                    if(a.updated_at > b.updated_at) return -1;
-                    if(a.updated_at < b.updated_at) return 1;
+                    if(a.updated_at < b.updated_at) return -1;
+                    if(a.updated_at > b.updated_at) return 1;
                     return 0;
                 });
             }
@@ -37,7 +37,6 @@ new Vue({
             } else {
                 axios.get('/getblogsdata').then(response => this.blogs = response.data);
             }
-
         }
     }
 });
