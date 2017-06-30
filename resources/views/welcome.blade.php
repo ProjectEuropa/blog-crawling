@@ -6,18 +6,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css"/>
     <style>
         .message {
-            width: 300px;
+            width: 400px;
             margin: auto;
         }
 
         .message-body {
-            width: 300px;
+            width: 400px;
             margin: auto;
         }
 
         .message.is-primary .message-header {
-            width: 300px;
+            width: 400px;
             margin: auto;
+        }
+
+        .footer {
+            padding: inherit;
+            margin-top: 20px;
         }
     </style>
     <script type="text/javascript">
@@ -42,12 +47,12 @@
                     <input class="input" type="search" name="search" placeholder="キーワード検索" v-model="keyWord">
                     <a class="nav-item button is-primary" @click="search">Search</a>
 
-                        <span class="select nav-item">
-                            <select @change='sort()' v-model="orderType">
-                                <option value="new" selected>Sort by new Date</option>
-                                <option value="old">Sort by old Date</option>
-                            </select>
-                        </span>
+                    <span class="select nav-item">
+                        <select @change="sort" v-model="orderType">
+                            <option value="new" selected>Sort by new Date</option>
+                            <option value="old">Sort by old Date</option>
+                        </select>
+                    </span>
                 </span>
             </div>
         </nav>
@@ -62,8 +67,14 @@
                 最終更新日時：@{{ blog.updated_at }}
             </div>
         </article>
-        </div>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>&copy; 2017 Team Project Europa <br>
+            </div>
+        </div>
+    </footer>
 </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@2.3.4"></script>
