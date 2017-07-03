@@ -86,6 +86,12 @@ class CrawlCommand extends Command
                     $blogData = $this->getBlogData($index);
                     $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinistryAFF->format('Y-m-d'));
                     break;
+                case 'ビストロクルル「まだむの寝言」':
+                    $date = trim($crawler->filter(' .small')->first()->text(), '（）');
+                    $format = 'Y年m月d日';
+                    $dateQueue = DateTime::createFromFormat($format, $date);
+                    $blogData = $this->getBlogData($index);
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateQueue->format('Y-m-d'));
                 default:
                     break;
             }
