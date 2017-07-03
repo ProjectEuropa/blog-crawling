@@ -19,9 +19,16 @@ return [
             '5' => array(
                 'blogTitle' => 'ビストロクルル「まだむの寝言」',
                 'blogUrl' => 'http://queueleuleu.com/archives/category/negoto'), 
+            '6' => array(
+                'blogTitle' => '東京・練馬のパーソナルカラー診断・骨格診断　MEIBI',
+                'blogUrl' => 'http://www.meibi-color.com/blognews/'), 
 
         ),
 
     'heiseiYyyy' => 1988,
+
+    'dateFormatYnenMgetuDbi' => 'Y年m月d日',
+
+    'dateFormatY-m-d' => 'Y-m-d'
     
 ];
