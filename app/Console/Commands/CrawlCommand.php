@@ -61,14 +61,14 @@ class CrawlCommand extends Command
 
             switch ($blog['blogTitle']) {
                 case 'いつも隣にITのお仕事':
-                    $dateITWork = new DateTime(trim($crawler->filter('span .published')->first()->text()));
+                    $dateITWork = date(config('const.dateFormatY-m-d'), strtotime(trim($crawler->filter('span .published')->first()->text())));
                     $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateITWork->format(config('const.dateFormatY-m-d')));
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateITWork);
                     break;
                 case 'ミニマリスト日和':
-                    $dateMinimalist = new DateTime(trim($crawler->filter('div .first')->first()->text()));
+                    $dateMinimalist = date(config('const.dateFormatY-m-d'), strtotime(trim($crawler->filter('div .first')->first()->text())));
                     $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinimalist->format(config('const.dateFormatY-m-d')));
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinimalist);
                     break;
                 case '美人になれるたくさんの魔法':
                     $date = str_replace('NEW!', '', trim($crawler->filter('time')->first()->text()));
@@ -79,7 +79,7 @@ class CrawlCommand extends Command
                     break;
                 case '農林水産省ホームページ':
                     $japaneseDate = $crawler->filter('.list_item_date')->first()->text();
-                    $adYyyy = (string)(config('const.heiseiYyyy')+ str_replace('平成', '', $japaneseDate));
+                    $adYyyy = (string)(config('const.heiseiYyyy') + str_replace('平成', '', $japaneseDate));
                     $date = $adYyyy.preg_replace('/^平成[0-9][0-9]/', '', $japaneseDate);
                     $format = config('const.dateFormatYnenMgetuDbi');;
                     $dateMinistryAFF = DateTime::createFromFormat($format, $date);
@@ -99,6 +99,11 @@ class CrawlCommand extends Command
                     $datePersonal = DateTime::createFromFormat($format, $date);
                     $blogData = $this->getBlogData($index);
                     $this->insertOrUpdateBlogData($blogData, $blog, $index, $datePersonal->format(config('const.dateFormatY-m-d')));
+                    break;
+                case '〈熊本〉ファッション＆メイクで美人になるレッスン 望月順子':
+                    $dateKumamoto = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
+                    $blogData = $this->getBlogData($index);
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateKumamoto);
                     break;
                 default:
                     break;

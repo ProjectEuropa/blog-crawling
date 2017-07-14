@@ -21,7 +21,10 @@ return [
                 'blogUrl' => 'http://queueleuleu.com/archives/category/negoto'), 
             '6' => array(
                 'blogTitle' => '東京・練馬のパーソナルカラー診断・骨格診断　MEIBI',
-                'blogUrl' => 'http://www.meibi-color.com/blognews/'), 
+                'blogUrl' => 'http://www.meibi-color.com/blognews/'),
+            '7' => array(
+                'blogTitle' => '〈熊本〉ファッション＆メイクで美人になるレッスン 望月順子',
+                'blogUrl' => 'http://ameblo.jp/beauty-institute'),
 
         ),
 
