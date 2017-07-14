@@ -6,17 +6,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css"/>
     <style>
         .message {
-            width: 400px;
+            width: 450px;
             margin: auto;
         }
 
         .message-body {
-            width: 400px;
+            width: 450px;
             margin: auto;
         }
 
         .message.is-primary .message-header {
-            width: 400px;
+            width: 450px;
             margin: auto;
         }
 
@@ -31,7 +31,7 @@
     </script>
 </head>
 <body>
-<div id="app">
+<div id="app" style="display:none">
     <header>
         <nav class="nav">
             <div class="nav-left">

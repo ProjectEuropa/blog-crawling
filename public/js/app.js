@@ -6,6 +6,8 @@ new Vue({
         orderType: 'new',
     },
     mounted() {
+        // When the first time display, {{}} is reflected on display. To hide {{}}, just for a moment hide Vue object.
+        document.getElementById("app").style.display = '';
         axios.get('/getblogsdata').then(response => this.blogs = response.data);
     },
     methods: {
