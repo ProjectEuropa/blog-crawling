@@ -94,9 +94,9 @@ class CrawlCommand extends Command
                     $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateQueue->format(config('const.dateFormatY-m-d')));
                     break;
                 case '東京・練馬のパーソナルカラー診断・骨格診断　MEIBI':
-                    $date = trim(str_replace('お知らせ', '', $crawler->filter('p')->first()->text()));
+                    preg_match('/[0-9][0-9][0-9][0-9]年[0-9][0-9]月[0-9][0-9]日/', $crawler->filter('p')->first()->text(), $arrayDate);
                     $format = config('const.dateFormatYnenMgetuDbi');
-                    $datePersonal = DateTime::createFromFormat($format, $date);
+                    $datePersonal = DateTime::createFromFormat($format, $arrayDate[0]);
                     $blogData = $this->getBlogData($index);
                     $this->insertOrUpdateBlogData($blogData, $blog, $index, $datePersonal->format(config('const.dateFormatY-m-d')));
                     break;
@@ -161,7 +161,7 @@ class CrawlCommand extends Command
      * @param String $blogUpdateDate(yyyy-mm-dd)
      * @return void
      */
-    private function insertOrUpdateBlogData($blogData, $blog, String $index, String $blogUpdateDate)
+    private function insertOrUpdateBlogData($blogData, array $blog, String $index, String $blogUpdateDate)
     {
         if (!($blogData)) {
             $this->insertBlogData($blog['blogTitle'], $blog['blogUrl'], $blogUpdateDate);
