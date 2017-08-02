@@ -26,19 +26,12 @@ new Vue({
                 });
             }
         },
-        search: function () {
-            var filterWord = this.keyWord;
-            var array = new Array();
-            if (filterWord) {
-                this.blogs.forEach(function(element) {
-                    if (element.blog_title.indexOf(filterWord) != -1) {
-                        array.push(element);
-                    }                    
-                });
-                this.blogs = array;
-            } else {
-                axios.get('/getblogsdata').then(response => this.blogs = response.data);
-            }
+    },
+    computed: {
+        filterWord: function() {
+            return this.blogs.filter((blog) => {
+                return blog.blog_title.match(this.keyWord);
+            });
         }
     }
 });

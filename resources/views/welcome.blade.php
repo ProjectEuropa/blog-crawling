@@ -45,7 +45,6 @@
             <div class="nav-right nav-menu block">
                 <span class="nav-item">
                     <input class="input" type="search" name="search" placeholder="キーワード検索" v-model="keyWord">
-                    <a class="nav-item button is-primary" @click="search">Search</a>
 
                     <span class="select nav-item">
                         <select @change="sort" v-model="orderType">
@@ -59,7 +58,7 @@
     </header>
 
     <div>
-        <article class="message is-primary" v-for="blog in blogs">
+        <article class="message is-primary" v-for="blog in filterWord">
             <div class="message-header" >
                 <a :href="blog.blog_url" target="_blank"><p>@{{ blog.blog_title }}</p></a>
             </div>
