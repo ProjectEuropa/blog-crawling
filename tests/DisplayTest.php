@@ -23,6 +23,8 @@ class DisplayTest extends TestCase
                 'blog_title' => 'ビストロクルル「まだむの寝言」',
                 'blog_title' => '東京・練馬のパーソナルカラー診断・骨格診断　MEIBI',
                 'blog_title' => '〈熊本〉ファッション＆メイクで美人になるレッスン 望月順子',
+                'blog_title' => 'インテリアと暮らしのヒント',
+                'blog_title' => 'ほんとうに必要な物しか持たない暮らし',
              ]);;
     }
 }
