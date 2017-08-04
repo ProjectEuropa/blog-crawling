@@ -105,6 +105,16 @@ class CrawlCommand extends Command
                     $blogData = $this->getBlogData($index);
                     $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateKumamoto);
                     break;
+                case 'インテリアと暮らしのヒント':
+                    $dateInterior = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
+                    $blogData = $this->getBlogData($index);
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateInterior);
+                    break;
+                case 'ほんとうに必要な物しか持たない暮らし';
+                    $dateSmart = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
+                    $blogData = $this->getBlogData($index);
+                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateSmart);
+                    break;
                 default:
                     break;
             }

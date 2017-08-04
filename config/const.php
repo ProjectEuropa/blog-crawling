@@ -25,6 +25,12 @@ return [
             '7' => array(
                 'blogTitle' => '〈熊本〉ファッション＆メイクで美人になるレッスン 望月順子',
                 'blogUrl' => 'http://ameblo.jp/beauty-institute'),
+            '8' => array(
+                'blogTitle' => 'インテリアと暮らしのヒント',
+                'blogUrl' => 'http://ameblo.jp/gg-interior'),
+            '9' => array(
+                'blogTitle' => 'ほんとうに必要な物しか持たない暮らし',
+                'blogUrl' => 'http://ameblo.jp/yukikoismart'),
 
         ),
 
