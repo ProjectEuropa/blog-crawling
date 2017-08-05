@@ -48,76 +48,82 @@ class CrawlCommand extends Command
         $client = new Client();
 
         $blogs = collect(config('const.blogs'));
-    
-        foreach ($blogs as $index => $blog) {
-            // This is SSL protocol error connection measures.
-            $guzzle = new GuzzleClient(array(
-                'curl.options' => array(
-                    'CURLOPT_SSLVERSION' => 'CURL_SSLVERSION_TLSv1_1',
-                )
-            ));
-            $client->setClient($guzzle);
-            $crawler = $client->request('GET', $blog['blogUrl']);
 
-            switch ($blog['blogTitle']) {
-                case 'いつも隣にITのお仕事':
-                    $dateITWork = date(config('const.dateFormatY-m-d'), strtotime(trim($crawler->filter('span .published')->first()->text())));
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateITWork);
-                    break;
-                case 'ミニマリスト日和':
-                    $dateMinimalist = date(config('const.dateFormatY-m-d'), strtotime(trim($crawler->filter('div .first')->first()->text())));
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinimalist);
-                    break;
-                case '美人になれるたくさんの魔法':
-                    $date = str_replace('NEW!', '', trim($crawler->filter('time')->first()->text()));
-                    $format = config('const.dateFormatYnenMgetuDbi');
-                    $dateBecomeBeauty = DateTime::createFromFormat($format, $date);
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateBecomeBeauty->format(config('const.dateFormatY-m-d')));
-                    break;
-                case '農林水産省ホームページ':
-                    $japaneseDate = $crawler->filter('.list_item_date')->first()->text();
-                    $adYyyy = (string)(config('const.heiseiYyyy') + str_replace('平成', '', $japaneseDate));
-                    $date = $adYyyy.preg_replace('/^平成[0-9][0-9]/', '', $japaneseDate);
-                    $format = config('const.dateFormatYnenMgetuDbi');;
-                    $dateMinistryAFF = DateTime::createFromFormat($format, $date);
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinistryAFF->format(config('const.dateFormatY-m-d')));
-                    break;
-                case 'ビストロクルル「まだむの寝言」':
-                    $date = trim($crawler->filter(' .small')->first()->text(), '（）');
-                    $format = config('const.dateFormatYnenMgetuDbi');
-                    $dateQueue = DateTime::createFromFormat($format, $date);
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateQueue->format(config('const.dateFormatY-m-d')));
-                    break;
-                case '東京・練馬のパーソナルカラー診断・骨格診断　MEIBI':
-                    preg_match('/[0-9][0-9][0-9][0-9]年[0-9][0-9]月[0-9][0-9]日/', $crawler->filter('p')->first()->text(), $arrayDate);
-                    $format = config('const.dateFormatYnenMgetuDbi');
-                    $datePersonal = DateTime::createFromFormat($format, $arrayDate[0]);
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $datePersonal->format(config('const.dateFormatY-m-d')));
-                    break;
-                case '〈熊本〉ファッション＆メイクで美人になるレッスン 望月順子':
-                    $dateKumamoto = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateKumamoto);
-                    break;
-                case 'インテリアと暮らしのヒント':
-                    $dateInterior = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateInterior);
-                    break;
-                case 'ほんとうに必要な物しか持たない暮らし';
-                    $dateSmart = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
-                    $blogData = $this->getBlogData($index);
-                    $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateSmart);
-                    break;
-                default:
-                    break;
+        try {
+            foreach ($blogs as $index => $blog) {
+                // This is SSL protocol error connection measures.
+                $guzzle = new GuzzleClient(array(
+                'curl.options' => array(
+                    'CURLOPT_SSLVERSION' => 'CURL_SSLVERSION_TLSv1_1',)));
+                $client->setClient($guzzle);
+                $crawler = $client->request('GET', $blog['blogUrl']);
+
+                switch ($blog['blogTitle']) {
+                    case 'いつも隣にITのお仕事':
+                        $dateITWork = date(config('const.dateFormatY-m-d'), strtotime(trim($crawler->filter('span .published')->first()->text())));
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateITWork);
+                        break;
+                    case 'ミニマリスト日和':
+                        $dateMinimalist = date(config('const.dateFormatY-m-d'), strtotime(trim($crawler->filter('div .first')->first()->text())));
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinimalist);
+                        break;
+                    case '美人になれるたくさんの魔法':
+                        $date = str_replace('NEW!', '', trim($crawler->filter('time')->first()->text()));
+                        $format = config('const.dateFormatYnenMgetuDbi');
+                        $dateBecomeBeauty = DateTime::createFromFormat($format, $date);
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateBecomeBeauty->format(config('const.dateFormatY-m-d')));
+                        break;
+                    case '農林水産省ホームページ':
+                        $japaneseDate = $crawler->filter('.list_item_date')->first()->text();
+                        $adYyyy = (string)(config('const.heiseiYyyy') + str_replace('平成', '', $japaneseDate));
+                        $date = $adYyyy.preg_replace('/^平成[0-9][0-9]/', '', $japaneseDate);
+                        $format = config('const.dateFormatYnenMgetuDbi');
+                        $dateMinistryAFF = DateTime::createFromFormat($format, $date);
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateMinistryAFF->format(config('const.dateFormatY-m-d')));
+                        break;
+                    case 'ビストロクルル「まだむの寝言」':
+                        $date = trim($crawler->filter(' .small')->first()->text(), '（）');
+                        $format = config('const.dateFormatYnenMgetuDbi');
+                        $dateQueue = DateTime::createFromFormat($format, $date);
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateQueue->format(config('const.dateFormatY-m-d')));
+                        break;
+                    case '東京・練馬のパーソナルカラー診断・骨格診断　MEIBI':
+                        preg_match('/[0-9][0-9][0-9][0-9]年[0-9][0-9]月[0-9][0-9]日/', $crawler->filter('p')->first()->text(), $arrayDatePersonal);
+                        // Dateformat may exist yyyy年MM月d日
+                        if (!($arrayDatePersonal)) {
+                           preg_match('/[0-9][0-9][0-9][0-9]年[0-9][0-9]月[0-9]日/', $crawler->filter('p')->first()->text(), $arrayDatePersonal); 
+                        }
+                        $format = config('const.dateFormatYnenMgetuDbi');
+                        $datePersonal = DateTime::createFromFormat($format, $arrayDatePersonal[0]);
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $datePersonal->format(config('const.dateFormatY-m-d')));
+                        break;
+                    case '〈熊本〉ファッション＆メイクで美人になるレッスン 望月順子':
+                        $dateKumamoto = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateKumamoto);
+                        break;
+                    case 'インテリアと暮らしのヒント':
+                        $dateInterior = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateInterior);
+                        break;
+                    case 'ほんとうに必要な物しか持たない暮らし';
+                        $dateSmart = date(config('const.dateFormatY-m-d'), strtotime($crawler->filter('time')->first()->text()));
+                        $blogData = $this->getBlogData($index);
+                        $this->insertOrUpdateBlogData($blogData, $blog, $index, $dateSmart);
+                        break;
+                    default:
+                        break;
+                }
             }
+        } catch (\Exception $e) {
+            $this->sendErrorMessageToSlack($e->getMessage(), $crawler->getUri());
         }
     }
      /**
@@ -125,7 +131,7 @@ class CrawlCommand extends Command
      * @param String $blogTitle
      * @param String $blogUrl
      * @param String $blogUpdateDate
-     * @return voidr
+     * @return void
      */
     function insertBlogData(String $blogTitle, String $blogUrl, String $blogUpdateDate)
     {
@@ -178,19 +184,31 @@ class CrawlCommand extends Command
         } else {
             if (!($blogData->blog_update_date == $blogUpdateDate)) {
                 $this->updateBlogData($index, $blogUpdateDate);
-                $this->sendToSlack($blog['blogTitle'], $blog['blogUrl']);
+                $this->sendNewsToSlack($blog['blogTitle'], $blog['blogUrl']);
             }
         }
     }
  
      /**
-     * Send message to Slack.
+     * Send message to Slack. Slack channel is #news.
      * @param String $blogTitle
      * @param String $blogUrl
      * @return void
      */
-    private function sendToSlack(String $blogTitle, String $blogUrl)
+    private function sendNewsToSlack(String $blogTitle, String $blogUrl)
     {
         Slack::send('> '.$blogTitle.'が更新されました。リンク：'.$blogUrl);
+    }
+
+     /**
+     * Send error message to Slack. Slack channel is #info.
+     * @param String $errorMessage(Expeption message)
+     * @param String $blogUrl
+     * @return void
+     */
+    private function sendErrorMessageToSlack(String $errorMessage, String $blogUrl)
+    {
+        Slack::to('#info')->send('> エラーが発生しました。ブログリンク:'.$blogUrl);
+        Slack::to('#info')->send('> エラーメッセージ:'.$errorMessage);
     }
 }
